@@ -3,9 +3,9 @@ import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mystery_dinning_adventure/core/__extension_export.dart';
+import 'package:mystery_dinning_adventure/core/__resources_export.dart';
 import 'package:mystery_dinning_adventure/core/app_core.dart';
-import 'package:mystery_dinning_adventure/core/extension/context.dart';
-import 'package:mystery_dinning_adventure/core/resources/notification.dart';
 import 'package:mystery_dinning_adventure/core/routes/route.dart';
 import 'package:mystery_dinning_adventure/core/storage/storage.dart';
 

@@ -1,8 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:mystery_dinning_adventure/core/__network_export.dart';
 import 'package:mystery_dinning_adventure/core/logger/app_logger.dart';
-import 'package:mystery_dinning_adventure/core/network/network_info.dart';
-import 'package:mystery_dinning_adventure/core/network/state.dart';
 
 @lazySingleton
 class ImplFormatter {
@@ -13,6 +12,8 @@ class ImplFormatter {
   final NetworkInfo networkInfo;
 
   Future<AppState> format(Function function) async {
+    // this class checks and handles any exception that might occur 
+    // interacting with any endpoint
     if (await networkInfo.isConnected()) {
       try {
         return LoadedState(await function.call());
@@ -38,6 +39,8 @@ class ImplFormatter {
 
         return ErrorState(e.message ?? '');
       } catch (e, s) {
+        AppLogger.log(s);
+
         return ErrorState(e.toString());
       }
     } else {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mystery_dinning_adventure/core/extension/context.dart';
+import 'package:mystery_dinning_adventure/core/service_locator/injection_container.dart';
 import 'package:mystery_dinning_adventure/core/theme/theme.dart';
 
 import 'core/app_core.dart';
@@ -8,6 +9,8 @@ import 'core/resources/notification_wrapper.dart';
 import 'core/routes/route.dart';
 
 void main() async {
+  await configureDependencies();
+
   runApp(const MyApp());
 }
 
