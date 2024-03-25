@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mystery_dinning_adventure/core/app_strings.dart';
 import 'package:mystery_dinning_adventure/core/extension/context.dart';
 import 'package:mystery_dinning_adventure/core/extension/widget.dart';
 import 'package:mystery_dinning_adventure/core/logger/app_logger.dart';
@@ -54,7 +56,10 @@ class _SpinAWheelState extends State<SpinAWheel>
         .rollTo(selected, duration: Duration(milliseconds: millisecond))
         .then((_) {
       // Reveal Restaurant
-      AppLogger.log(selected);
+      context.push(
+        Strings.dinerDeatils,
+        extra: true,
+      );
 
       setState(() {
         spinning = !spinning;

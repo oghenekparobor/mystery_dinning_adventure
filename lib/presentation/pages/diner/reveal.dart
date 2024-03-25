@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mystery_dinning_adventure/core/app_strings.dart';
 import 'package:mystery_dinning_adventure/core/extension/context.dart';
@@ -38,8 +39,14 @@ class RevealRestaurant extends StatelessWidget {
                 },
               ],
               totalRepeatCount: 1,
-              pause: const Duration(milliseconds: 1500),
+              pause: const Duration(milliseconds: 500),
               displayFullTextOnTap: true,
+              onFinished: () {
+                context.push(
+                  Strings.dinerDeatils,
+                  extra: true,
+                );
+              },
             ),
           )
         ],
