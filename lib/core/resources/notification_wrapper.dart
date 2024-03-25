@@ -3,12 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class Notification {
-  final String message;
-
-  Notification(this.message);
-}
-
 class NotificationWrapperStack extends StatefulWidget {
   final Widget child;
 

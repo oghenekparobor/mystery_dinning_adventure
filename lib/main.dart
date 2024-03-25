@@ -7,7 +7,7 @@ import 'core/app_core.dart';
 import 'core/resources/notification_wrapper.dart';
 import 'core/routes/route.dart';
 
-void main() {
+void main() async {
   runApp(const MyApp());
 }
 
