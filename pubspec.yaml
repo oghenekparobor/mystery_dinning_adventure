@@ -54,6 +54,8 @@ dependencies:
   permission_handler: ^11.3.0
   connectivity_plus: ^6.0.1
   sqflite: ^2.3.2
+  dart_casing: ^3.0.1
+  animated_text_kit: ^4.2.2
 
 dev_dependencies:
   flutter_test:
