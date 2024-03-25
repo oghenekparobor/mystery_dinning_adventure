@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:mystery_dinning_adventure/core/extension/context.dart';
 import 'package:mystery_dinning_adventure/core/theme/theme.dart';
 
 import 'core/app_core.dart';
+import 'core/resources/notification_wrapper.dart';
 import 'core/routes/route.dart';
 
 void main() {
@@ -22,13 +24,21 @@ class MyApp extends StatelessWidget {
         title: Strings.title,
         routerConfig: routerConfig,
         theme: theme(context),
-        // builder: (context, child) {
-        //   final MediaQueryData query = MediaQuery.of(context);
-        //   final scale = query.textScaler.clamp(
-        //     minScaleFactor: 0.9,
-        //     maxScaleFactor: 1.0,
-        //   );
-        // },
+        builder: (context, child) {
+          // set up font scaling
+          final scale = context.mediaQuery.textScaler.clamp(
+            minScaleFactor: 0.9,
+            maxScaleFactor: 1.0,
+          );
+          final MediaQueryData mediaQuery = context.mediaQuery.copyWith(
+            textScaler: scale,
+          );
+
+          return MediaQuery(
+            data: mediaQuery,
+            child: NotificationWrapperStack(child: child!),
+          );
+        },
       ),
     );
   }
