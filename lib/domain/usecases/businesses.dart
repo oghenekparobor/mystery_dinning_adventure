@@ -24,21 +24,21 @@ class GetBusinessesUsecase extends UseCase<AppState, BusinessParam> {
       }
     }
 
-    // if (params.radius != null) {
-    //   query += '&radius=${(params.radius! * 1000).toInt()}';
-    // }
+    if (params.radius != null) {
+      query += '&radius=${(params.radius! * 1000).toInt()}';
+    }
 
-    // if (params.priceInteger != null || params.priceInteger!.isNotEmpty) {
-    //   for (var i in params.priceInteger!) {
-    //     query += '&price=$i';
-    //   }
-    // }
+    if (params.priceInteger != null || params.priceInteger!.isNotEmpty) {
+      for (var i in params.priceInteger!) {
+        query += '&price=$i';
+      }
+    }
 
-    // if (params.attributes != null || params.attributes!.isNotEmpty) {
-    //   for (var a in params.attributes!) {
-    //     query += '&attributes=$a';
-    //   }
-    // }
+    if (params.attributes != null || params.attributes!.isNotEmpty) {
+      for (var a in params.attributes!) {
+        query += '&attributes=$a';
+      }
+    }
 
     // if (params.date != null) {
     //   if (params.person != null && params.person! > 0) {

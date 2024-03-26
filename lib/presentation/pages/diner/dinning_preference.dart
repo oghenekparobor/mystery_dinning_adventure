@@ -3,7 +3,6 @@ import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lottie/lottie.dart';
 import 'package:mystery_dinning_adventure/core/__extension_export.dart';
 import 'package:mystery_dinning_adventure/core/__network_export.dart';
 import 'package:mystery_dinning_adventure/core/__resources_export.dart';
@@ -43,7 +42,7 @@ class _SetDinningPreferenceState extends State<SetDinningPreference> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             30.verticalSpace,
-            // const ChangeLocation(),
+            const ChangeLocation(),
             16.verticalSpace,
             FutureBuilder(
               future: context.myn.getCategories(),
