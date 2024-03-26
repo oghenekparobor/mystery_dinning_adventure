@@ -71,8 +71,13 @@ This project was built using Clean Architecture and relies on the following pack
 
 #### Using the Yelp API
 
-The Yelp Fusion api was mainly used to get categories Yelp Fusion works with and provide the business based on some query command.
+The Yelp Fusion API served as the backbone for this project, enabling seamless access to a vast array of business categories and facilitating precise querying for businesses based on user-defined parameters. Leveraging the API's robust capabilities, the system dynamically retrieved business data, ensuring relevance and diversity in suggestions.
 
+To enhance user engagement and anticipation, Lottie animations were seamlessly integrated into the user interface, creating an immersive and suspenseful experience leading up to the revelation of the selected business. These animations added a touch of excitement, building anticipation as users awaited the unveiling of their mystery dining destination.
+
+Moreover, the implementation of a roulette-style interface further enriched the user experience. This interactive component visually presented a curated selection of businesses tailored to the user's preferences. With a simple tap, users could activate the roulette, which would then randomly select a business from the displayed options. This gamified approach added an element of spontaneity and fun, allowing users to embrace the unpredictability of their dining adventure.
+
+Through the strategic utilization of both the Yelp Fusion API and Lottie animations, coupled with the innovative roulette interface, the application not only delivered personalized dining recommendations but also fostered an engaging and memorable user journey from start to finish.
 
 
 ```
