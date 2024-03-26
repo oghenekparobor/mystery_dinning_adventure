@@ -1,15 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
+import 'package:mystery_dinning_adventure/core/__extension_export.dart';
+import 'package:mystery_dinning_adventure/core/__network_export.dart';
+import 'package:mystery_dinning_adventure/core/__resources_export.dart';
+import 'package:mystery_dinning_adventure/core/extension/state.dart';
+import 'package:mystery_dinning_adventure/core/logger/app_logger.dart';
+import 'package:mystery_dinning_adventure/core/params/business.dart';
+import 'package:mystery_dinning_adventure/core/routes/route.dart';
+import 'package:mystery_dinning_adventure/core/usecase/usecase.dart';
+import 'package:mystery_dinning_adventure/data/models/restaurant.dart';
+import 'package:mystery_dinning_adventure/domain/usecases/businesses.dart';
+import 'package:mystery_dinning_adventure/domain/usecases/categories.dart';
 import 'package:mystery_dinning_adventure/domain/usecases/location.dart';
+import 'package:mystery_dinning_adventure/domain/usecases/log.dart';
 
 @lazySingleton
 class MyNotifier with ChangeNotifier {
   MyNotifier({
     required this.locationUsecase,
+    required this.categoriesUsecase,
+    required this.getBusinessesUsecase,
+    required this.adventureLogUsecase,
   });
 
   final LocationUsecase locationUsecase;
+  final GetCategoriesUsecase categoriesUsecase;
+  final GetBusinessesUsecase getBusinessesUsecase;
+  final AdventureLogUsecase adventureLogUsecase;
 
   Future<bool> hasPermission() async => await locationUsecase.hasPermission();
 
@@ -22,32 +40,142 @@ class MyNotifier with ChangeNotifier {
 
     notifyListeners();
   }
-}
 
-final images = <ImageProvider>[
-  const NetworkImage(
-      "https://cdn.vox-cdn.com/thumbor/UixJG8lZQVN9qI6pBcxprYOsWeA=/0x0:1920x1080/1200x800/filters:focal(807x387:1113x693)/cdn.vox-cdn.com/uploads/chorus_image/image/68876614/26355890.6.jpeg"),
-  const NetworkImage(
-      "https://assets-prd.ignimgs.com/2022/08/17/top25animecharacters-blogroll-1660777571580.jpg"),
-  const NetworkImage(
-      "https://hips.hearstapps.com/hmg-prod/images/index-anime-1674137684.jpg?crop=0.502xw:1.00xh;0.250xw,0&resize=1200:*"),
-  const NetworkImage(
-      "https://c.files.bbci.co.uk/F382/production/_123883326_852a3a31-69d7-4849-81c7-8087bf630251.jpg"),
-  const NetworkImage(
-      "https://www.hindustantimes.com/ht-img/img/2023/02/14/550x309/Understanding_the_different_genres_and_sub-genres_1676377654248_1676377654458_1676377654458.png"),
-  const NetworkImage(
-      "https://timesofindia.indiatimes.com/photo/104670161/104670161.jpg"),
-  const NetworkImage("https://img.youtube.com/vi/KuUhYOyJn78/sddefault.jpg"),
-  const NetworkImage(
-      "https://hips.hearstapps.com/hmg-prod/images/screen-shot-2024-01-16-at-4-55-07-pm-65a6fb45e7d31.png?crop=0.8558827713757291xw:1xh;center,top&resize=1200:*"),
-  const NetworkImage(
-      "https://imgix.ranker.com/list_img_v2/18020/2378020/original/2378020-u1?fit=crop&fm=pjpg&q=80&dpr=2&w=1200&h=720"),
-  const NetworkImage(
-      "https://www.gamespot.com/a/uploads/screen_kubrick/1732/17320263/4019145-anime-dek-image.jpg"),
-  const NetworkImage(
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Anime_Girl.png/1280px-Anime_Girl.png"),
-  const NetworkImage(
-      "https://i.insider.com/5e820b04671de06758588fb8?width=700"),
-  const NetworkImage(
-      "https://cdn.vox-cdn.com/thumbor/xBIBkXiGLcP-kph3pCX61U7RMPY=/0x0:1400x788/1200x800/filters:focal(588x282:812x506)/cdn.vox-cdn.com/uploads/chorus_image/image/70412073/0377c76083423a1414e4001161e0cdffb0b36e1f_760x400.0.png"),
-];
+  List? categories;
+
+  Future<void> getCategories() async {
+    categories = null;
+
+    categoriesUsecase.call(params: const NoParams()).then((value) {
+      if (value.isError) {
+        navkey.currentContext!.notify.addNotification(
+          NotificationTile(
+            message: 'Error fetching categories',
+            type: NotificationType.error,
+            action: 'Try Again',
+            onTap: () => getCategories(),
+          ),
+        );
+        categories = [];
+      } else {
+        categories = (value as LoadedState).data;
+      }
+
+      notifyListeners();
+    });
+  }
+
+  Set<String> selectedCategories = <String>{};
+
+  void addRemoveCategory(String category) {
+    if (selectedCategories.contains(category)) {
+      selectedCategories.remove(category);
+    } else {
+      selectedCategories.add(category);
+    }
+
+    notifyListeners();
+  }
+
+  bool isCategorySelected(String category) {
+    return selectedCategories.contains(category);
+  }
+
+  List<String> attributes = [
+    'hot_and_new',
+    'deals',
+    'gender_neutral_restrooms',
+    'open_to_all',
+    'wheelchair_accessible',
+  ];
+
+  Set<String> selectedAttributes = <String>{};
+
+  void addRemoveAttribute(String value) {
+    if (selectedAttributes.contains(value)) {
+      selectedAttributes.remove(value);
+    } else {
+      selectedAttributes.add(value);
+    }
+
+    notifyListeners();
+  }
+
+  bool isAtrributeSelected(String value) {
+    return selectedAttributes.contains(value);
+  }
+
+  int? numberOfPersons = 0;
+  double km = 10.0;
+  double? startCost = 700.0;
+  double? endCost = 6000.0;
+  DateTime? reservationDate;
+
+  // get price integer for price range selected
+  int categorizeAmount(double amount) {
+    if (amount >= 5 && amount < 100) {
+      return 1;
+    } else if (amount >= 100 && amount < 1000) {
+      return 2;
+    } else if (amount >= 1000 && amount < 5000) {
+      return 3;
+    } else {
+      return 4;
+    }
+  }
+
+  dynamic businesses;
+
+  Future<AppState> searchBusiness() async {
+    var res = await getBusinessesUsecase.call(
+      params: BusinessParam(
+        attributes: selectedAttributes,
+        categories: selectedCategories,
+        date: reservationDate,
+        latitude: myLocation?.latitude ?? 0.0,
+        longitude: myLocation?.longitude ?? 0.0,
+        person: numberOfPersons,
+        priceInteger: [
+          categorizeAmount(startCost ?? 0.0),
+          categorizeAmount(endCost ?? 0.0),
+        ],
+        radius: km,
+      ),
+    );
+
+    if (!res.isError) {
+      businesses = (res as LoadedState).data;
+
+      AppLogger.log(businesses);
+    }
+
+    return res;
+  }
+
+  Future<List<RestaurantModel>> fetchRestaurants() async {
+    return adventureLogUsecase.fetchRestaurants();
+  }
+
+  Future<void> addToLog(RestaurantModel model) async {
+    return await adventureLogUsecase.addRestaurantToLog(model);
+  }
+
+  List? reviews;
+
+  Future<void> fetchReviews(String id) async {
+    reviews = await adventureLogUsecase.fetchReview(id);
+
+    notifyListeners();
+  }
+
+  Future<void> leaveReview(String id, String text, double rating) async {
+    await adventureLogUsecase.addReview({
+      'business_id': id,
+      'review': text,
+      'rating': rating,
+      'review_date': DateTime.now().toIso8601String(),
+    });
+
+    fetchReviews(id);
+  }
+}

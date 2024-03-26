@@ -13,13 +13,13 @@ class Restaurant extends Equatable {
   final String url;
   final int reviewCount;
   final List<CategoryModel> categories;
-  final double rating;
+  final num rating;
   final CoordinateModel coordinates;
   final List<String> transactions;
   final LocationModel location;
   final String phone;
   final String displayPhone;
-  final double distance;
+  final num distance;
   final AttributeModel attributes;
 
   const Restaurant({

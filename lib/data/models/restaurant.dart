@@ -30,7 +30,9 @@ class RestaurantModel extends Restaurant {
       id: json['id'] ?? '',
       alias: json['alias'] ?? '',
       name: json['name'] ?? '',
-      imageUrl: json['image_url'] ?? '',
+      imageUrl: (json['image_url'] == null || json['image_url'].isEmpty)
+          ? 'https://cdn.vox-cdn.com/thumbor/TnQsfRLuAXU14TbXIjDLugrS8_0=/0x0:1000x640/1400x1400/filters:focal(500x320:501x321)/cdn0.vox-cdn.com/uploads/chorus_asset/file/8988591/Yelp_trademark_RGB_outline.jpg'
+          : json['image_url'],
       isClosed: json['is_closed'] ?? false,
       url: json['url'] ?? '',
       reviewCount: json['review_count'] ?? 0,
@@ -38,7 +40,7 @@ class RestaurantModel extends Restaurant {
               ?.map((e) => CategoryModel.fromJson(e))
               .toList() ??
           [],
-      rating: json['rating'] ?? 0.0,
+      rating: num.parse('${json['rating'] ?? 0.0}'),
       coordinates: CoordinateModel.fromJson(json['coordinates'] ?? {}),
       transactions: (json['transactions'] as List<dynamic>?)
               ?.map((e) => e.toString())
@@ -47,7 +49,7 @@ class RestaurantModel extends Restaurant {
       location: LocationModel.fromJson(json['location'] ?? {}),
       phone: json['phone'] ?? '',
       displayPhone: json['display_phone'] ?? '',
-      distance: json['distance']?.toDouble() ?? 0.0,
+      distance: num.parse('${json['distance']?.toDouble() ?? 0.0}'),
       attributes: AttributeModel.fromJson(json['attributes'] ?? {}),
     );
   }
@@ -112,19 +114,20 @@ class RestaurantModel extends Restaurant {
   }
 
   static String get createTableQuery => '''
-    CREATE TABLE IF NOT EXISTS Restaurant (
-      id TEXT PRIMARY KEY,
-      business_id TEXT NOT NULL,
-      business_details TEXT NOT NULL
-    )
-  ''';
+  CREATE TABLE IF NOT EXISTS Restaurant (
+    id TEXT PRIMARY KEY,
+    business_id TEXT NOT NULL,
+    business_details TEXT NOT NULL
+  )
+''';
 
   static String get createTable2Query => '''
-    CREATE TABLE IF NOT EXISTS Review (
-      id TEXT PRIMARY KEY,
-      business_id TEXT NOT NULL,
-      review TEXT,
-      rating REAL
-    )
-  ''';
+  CREATE TABLE IF NOT EXISTS Review (
+    id TEXT PRIMARY KEY,
+    business_id TEXT NOT NULL,
+    review TEXT,
+    rating REAL,
+    review_date TEXT NOT NULL
+  )
+''';
 }

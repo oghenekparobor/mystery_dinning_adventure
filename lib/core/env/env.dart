@@ -10,6 +10,6 @@ abstract class Env {
   @EnviedField(varName: 'BaseUrl')
   static String baseUrl = _Env.baseUrl;
 
-  @EnviedField(varName: 'ApiKey')
-  static String apiKey = _Env.apiKey;
+  @EnviedField(varName: 'Key')
+  static String key = _Env.key;
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mystery_dinning_adventure/core/app_core.dart';
+import 'package:mystery_dinning_adventure/data/models/restaurant.dart';
 import 'package:mystery_dinning_adventure/presentation/notifier/notifier.dart';
 import 'package:mystery_dinning_adventure/presentation/pages/diner/see_restaurant.dart';
 import 'package:mystery_dinning_adventure/presentation/pages/home/home.dart';
@@ -38,7 +39,7 @@ final routerConfig = GoRouter(
     GoRoute(
       path: Strings.spinAWheel,
       builder: (context, state) => SpinAWheel(
-        businesses: images,
+        businesses: (state.extra as List),
       ),
     ),
     GoRoute(
@@ -47,9 +48,16 @@ final routerConfig = GoRouter(
     ),
     GoRoute(
       path: Strings.dinerDeatils,
-      builder: (context, state) => DinerDetails(
-        fromResult: (state.extra as bool?) ?? false,
-      ),
+      builder: (context, state) {
+        var extra = state.extra as Map<String, dynamic>;
+
+        return DinerDetails(
+          fromResult: extra['fromResult'] ?? false,
+          restaurant: extra['restaurant'] != null
+              ? RestaurantModel.fromJson(extra['restaurant'])
+              : null,
+        );
+      },
     ),
   ],
   navigatorKey: navkey,

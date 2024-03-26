@@ -44,8 +44,14 @@ class RevealRestaurant extends StatelessWidget {
               onFinished: () {
                 context.push(
                   Strings.dinerDeatils,
-                  extra: true,
-                );
+                  extra: {
+                    'fromResult': true,
+                    // present the first business because it best matches the preference
+                    'restaurant': context.myn.businesses['businesses'][0],
+                  },
+                ).then((value) {
+                  context.pop();
+                });
               },
             ),
           )

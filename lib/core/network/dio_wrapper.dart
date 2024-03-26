@@ -18,10 +18,13 @@ class DioWrapper {
     bool isProtected = true,
     bool isFormData = false,
   }) async {
+    AppLogger.log(endpoint);
+    AppLogger.log(Env.key);
+
     Response response = await dio.get(
       '${Env.baseUrl}$endpoint',
       options: Options(headers: {
-        if (isProtected) 'Authorization': 'Bearer ${Env.apiKey}',
+        if (isProtected) 'Authorization': 'Bearer ${Env.key}',
         'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
       }),
     );
@@ -41,7 +44,7 @@ class DioWrapper {
       '${Env.baseUrl}$endpoint',
       data: isFormData ? FormData.fromMap(data) : data,
       options: Options(headers: {
-        if (isProtected) 'Authorization': 'Bearer ${Env.apiKey}',
+        if (isProtected) 'Authorization': 'Bearer ${Env.key}',
         'Content-Type': isFormData ? 'multipart/form-data' : 'application/json',
       }),
     );

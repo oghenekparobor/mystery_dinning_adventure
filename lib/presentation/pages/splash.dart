@@ -2,13 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:location/location.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mystery_dinning_adventure/core/__extension_export.dart';
 import 'package:mystery_dinning_adventure/core/__resources_export.dart';
 import 'package:mystery_dinning_adventure/core/app_strings.dart';
-import 'package:mystery_dinning_adventure/core/service_locator/injection_container.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -20,7 +17,7 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    Future.delayed(Duration.zero, _init);
+    Future.delayed(const Duration(seconds: 2), _init);
 
     super.initState();
   }

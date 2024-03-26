@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:mystery_dinning_adventure/core/app_strings.dart';
 import 'package:mystery_dinning_adventure/core/extension/context.dart';
 import 'package:mystery_dinning_adventure/core/extension/widget.dart';
-import 'package:mystery_dinning_adventure/core/logger/app_logger.dart';
 import 'package:mystery_dinning_adventure/presentation/widgets/arrow.dart';
 import 'package:roulette/roulette.dart' as r;
 import 'dart:math' as math;
@@ -58,7 +57,10 @@ class _SpinAWheelState extends State<SpinAWheel>
       // Reveal Restaurant
       context.push(
         Strings.dinerDeatils,
-        extra: true,
+        extra: {
+          'fromResult': true,
+          'restaurant': context.myn.businesses['businesses'][selected],
+        },
       );
 
       setState(() {

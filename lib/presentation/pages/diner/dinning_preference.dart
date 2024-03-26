@@ -1,15 +1,24 @@
-import 'package:animate_do/animate_do.dart';
 import 'package:dart_casing/dart_casing.dart';
+import 'package:fade_shimmer/fade_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lottie/lottie.dart';
 import 'package:mystery_dinning_adventure/core/__extension_export.dart';
+import 'package:mystery_dinning_adventure/core/__network_export.dart';
+import 'package:mystery_dinning_adventure/core/__resources_export.dart';
 import 'package:mystery_dinning_adventure/core/app_strings.dart';
+import 'package:mystery_dinning_adventure/core/extension/state.dart';
 import 'package:mystery_dinning_adventure/core/extension/widget.dart';
+import 'package:mystery_dinning_adventure/core/resources/loader.dart';
 import 'package:mystery_dinning_adventure/core/resources/primary_button.dart';
+import 'package:mystery_dinning_adventure/presentation/notifier/notifier.dart';
 import 'package:mystery_dinning_adventure/presentation/widgets/category_chip.dart';
 import 'package:mystery_dinning_adventure/presentation/widgets/change_location.dart';
 import 'package:mystery_dinning_adventure/presentation/widgets/date.dart';
+import 'package:mystery_dinning_adventure/presentation/widgets/price.dart';
+import 'package:mystery_dinning_adventure/presentation/widgets/radius.dart';
+import 'package:provider/provider.dart';
 
 class SetDinningPreference extends StatefulWidget {
   const SetDinningPreference({super.key});
@@ -19,30 +28,6 @@ class SetDinningPreference extends StatefulWidget {
 }
 
 class _SetDinningPreferenceState extends State<SetDinningPreference> {
-  List<String> cat = [
-    'pizza',
-    'food',
-    'eat-in',
-    'fast-foods',
-    'african',
-    'drinks',
-    'soda',
-    'diner',
-    'fruit',
-    'vegatables',
-    'cereals',
-  ];
-  List<String> scat = [];
-
-  List<String> attr = [
-    'hot_and_new',
-    'deals',
-    'gender_neutral_restrooms',
-    'open_to_all',
-    'wheelchair_accessible',
-  ];
-  List<String> sattr = [];
-
   double cs = 5;
 
   double sc = 1000;
@@ -65,112 +50,65 @@ class _SetDinningPreferenceState extends State<SetDinningPreference> {
             30.verticalSpace,
             const ChangeLocation(),
             16.verticalSpace,
-            Container(
-              width: double.infinity,
-              padding: EdgeInsets.symmetric(
-                vertical: 16.h,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30.r),
-                // border: Border.all(),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'Select Categories',
-                    style: context.textTheme.labelMedium,
-                  ),
-                  8.verticalSpace,
-                  Wrap(
-                    children: [
-                      for (var i in cat)
-                        CategoryChip(
-                          title: Casing.titleCase(i),
-                          isSelected: scat.contains(i),
-                          onTap: () {
-                            setState(() {
-                              if (scat.contains(i)) {
-                                scat.remove(i);
-                              } else {
-                                scat.add(i);
+            FutureBuilder(
+              future: context.myn.getCategories(),
+              builder: (context, snapshot) {
+                return Consumer<MyNotifier>(
+                  builder: (context, value, child) => Container(
+                    width: double.infinity,
+                    padding: EdgeInsets.symmetric(
+                      vertical: 16.h,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(30.r),
+                      // border: Border.all(),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          'Select Categories',
+                          style: context.textTheme.labelMedium,
+                        ),
+                        8.verticalSpace,
+                        Wrap(
+                          children: [
+                            if (value.categories != null) ...{
+                              for (var i in value.categories ?? [])
+                                CategoryChip(
+                                  title: Casing.titleCase(i),
+                                  isSelected: value.isCategorySelected(i),
+                                  onTap: () => value.addRemoveCategory(i),
+                                )
+                            } else ...{
+                              for (var i = 0; i < 15; i++) ...{
+                                Padding(
+                                  padding: EdgeInsets.only(
+                                    right: 8.w,
+                                    bottom: 8.h,
+                                  ),
+                                  child: FadeShimmer(
+                                    height: 30.h,
+                                    width: 90.w,
+                                    baseColor: Colors.amber.shade50,
+                                    highlightColor: Colors.black12,
+                                    radius: 30.r,
+                                  ),
+                                ),
                               }
-                            });
-                          },
+                            }
+                          ],
                         )
-                    ],
-                  )
-                ],
-              ),
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'How Far Away?',
-                      style: context.textTheme.labelMedium,
+                      ],
                     ),
-                    const Spacer(),
-                    Text(
-                      '${cs.toStringAsFixed(0)}KM away',
-                      style: context.textTheme.labelMedium,
-                    ),
-                  ],
-                ),
-                8.verticalSpace,
-                Slider(
-                  value: cs,
-                  min: 1,
-                  max: 40,
-                  divisions: 15,
-                  label: '${cs.toStringAsFixed(0)} KM',
-                  onChanged: (double value) {
-                    setState(() {
-                      cs = value;
-                    });
-                  },
-                ),
-              ],
+                  ),
+                );
+              },
             ),
+            const Radius(),
             16.verticalSpace,
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Row(
-                  children: [
-                    Text(
-                      'Price Range?',
-                      style: context.textTheme.labelMedium,
-                    ),
-                    const Spacer(),
-                    Text(
-                      '\$${sc.toStringAsFixed(0)} - \$${ec.toStringAsFixed(0)}',
-                      style: context.textTheme.labelMedium,
-                    ),
-                  ],
-                ),
-                8.verticalSpace,
-                RangeSlider(
-                  min: 5,
-                  max: 10000,
-                  divisions: 5000,
-                  labels: RangeLabels('\$${sc.toStringAsFixed(0)}',
-                      '\$${ec.toStringAsFixed(0)}'),
-                  onChanged: (value) {
-                    setState(() {
-                      sc = value.start;
-                      ec = value.end;
-                    });
-                  },
-                  values: RangeValues(sc, ec),
-                ),
-              ],
-            ),
+            const PriceRange(),
             16.verticalSpace,
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -181,23 +119,17 @@ class _SetDinningPreferenceState extends State<SetDinningPreference> {
                   style: context.textTheme.labelMedium,
                 ),
                 8.verticalSpace,
-                Wrap(
-                  children: [
-                    for (var i in attr)
-                      CategoryChip(
-                        title: Casing.titleCase(i),
-                        isSelected: sattr.contains(i),
-                        onTap: () {
-                          setState(() {
-                            if (sattr.contains(i)) {
-                              sattr.remove(i);
-                            } else {
-                              sattr.add(i);
-                            }
-                          });
-                        },
-                      )
-                  ],
+                Consumer<MyNotifier>(
+                  builder: (context, value, child) => Wrap(
+                    children: [
+                      for (var i in value.attributes)
+                        CategoryChip(
+                          title: Casing.titleCase(i),
+                          isSelected: value.isAtrributeSelected(i),
+                          onTap: () => value.addRemoveAttribute(i),
+                        ),
+                    ],
+                  ),
                 )
               ],
             ),
@@ -219,24 +151,75 @@ class _SetDinningPreferenceState extends State<SetDinningPreference> {
                     hintText: '1',
                   ),
                   keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    if (value.isNotEmpty) {
+                      context.myn.numberOfPersons = int.parse(value);
+                    } else {
+                      context.myn.numberOfPersons = null;
+                    }
+                  },
                 ),
                 16.verticalSpace,
                 PrimaryDatePicker(
-                  dateSelected: (p0) {},
+                  dateSelected: (p0) {
+                    context.myn.reservationDate = p0;
+                  },
                 ),
               ],
             ),
             60.verticalSpace,
             PrimaryButton(
               text: 'Search',
-              onTap: () {
-                context.push(Strings.selectReveal);
-              },
+              onTap: search,
             ),
             60.verticalSpace,
           ],
         ).padHorizontal,
       ),
     );
+  }
+
+  void search() {
+    if (context.myn.myLocation == null) {
+      context.notify.addNotification(
+        const NotificationTile(
+          message: 'Select desired location',
+          type: NotificationType.warning,
+        ),
+      );
+
+      context.push(Strings.locationPage);
+    } else {
+      // Loader
+      AppLoader.show();
+
+      context.myn.searchBusiness().then((value) {
+        context.pop();
+
+        if (value.isError) {
+          context.notify.addNotification(
+            NotificationTile(
+              message: (value as ErrorState).msg,
+              type: NotificationType.error,
+            ),
+          );
+        } else {
+          if (context.myn.businesses['total'] < 1) {
+            context.notify.addNotification(
+              const NotificationTile(
+                message:
+                    'No restaurants found based on your preference.\nPlease fine-tune your preference',
+                type: NotificationType.warning,
+              ),
+            );
+          } else {
+            context.push(
+              Strings.selectReveal,
+              extra: (value as LoadedState).data,
+            );
+          }
+        }
+      });
+    }
   }
 }

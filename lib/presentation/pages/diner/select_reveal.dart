@@ -66,7 +66,14 @@ class SelectDiningReveal extends StatelessWidget {
             child: ElasticIn(
               child: GestureDetector(
                 onTap: () {
-                  context.push(Strings.spinAWheel);
+                  context.push(
+                    Strings.spinAWheel,
+                    extra: (context.myn.businesses['businesses'] as List)
+                        .map((e) => NetworkImage((e['image_url'].isEmpty)
+                            ? 'https://cdn.vox-cdn.com/thumbor/TnQsfRLuAXU14TbXIjDLugrS8_0=/0x0:1000x640/1400x1400/filters:focal(500x320:501x321)/cdn0.vox-cdn.com/uploads/chorus_asset/file/8988591/Yelp_trademark_RGB_outline.jpg'
+                            : e['image_url']))
+                        .toList(),
+                  );
                 },
                 child: Container(
                   width: double.infinity,
@@ -94,7 +101,7 @@ class SelectDiningReveal extends StatelessWidget {
                       ),
                       8.verticalSpace,
                       Text(
-                        'Spin a wheel and get reccommended a diner',
+                        'Spin a wheel and get recommended a diner',
                         style: context.textTheme.labelLarge,
                         textAlign: TextAlign.center,
                       ).padHorizontal,

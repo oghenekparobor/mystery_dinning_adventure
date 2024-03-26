@@ -8,6 +8,15 @@ abstract class LocalDS {
   Future<PermissionStatus> initLocation();
   Future<bool> hasLocationPermission();
   Future<void> startDB();
+  Future<void> saveToDB({
+    required String table,
+    required Map<String, dynamic> data,
+  });
+  Future<List<Map<String, dynamic>>> readDB(
+    String table, [
+    String whereClause,
+    List? whereArgs,
+  ]);
 }
 
 @LazySingleton(as: LocalDS)
@@ -45,5 +54,22 @@ class LocalDSImpl extends LocalDS {
       RestaurantModel.createTableQuery,
       RestaurantModel.createTable2Query,
     ]);
+  }
+
+  @override
+  Future<void> saveToDB({
+    required String table,
+    required Map<String, dynamic> data,
+  }) async {
+    return await database.save(table: table, data: data);
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> readDB(
+    String table, [
+    String? whereClause,
+    List? whereArgs,
+  ]) async {
+    return await database.read(table, whereClause, whereArgs);
   }
 }

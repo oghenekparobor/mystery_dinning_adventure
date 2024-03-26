@@ -4,17 +4,27 @@ import 'package:go_router/go_router.dart';
 import 'package:mystery_dinning_adventure/core/__extension_export.dart';
 import 'package:mystery_dinning_adventure/core/app_core.dart';
 import 'package:mystery_dinning_adventure/core/extension/widget.dart';
+import 'package:mystery_dinning_adventure/data/models/restaurant.dart';
 
 class DinerTile extends StatelessWidget {
   const DinerTile({
     super.key,
+    required this.model,
   });
+
+  final RestaurantModel model;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.push(Strings.dinerDeatils);
+        context.push(
+          Strings.dinerDeatils,
+          extra: {
+            'fromResult': false,
+            'restaurant': model.toJson(),
+          },
+        );
       },
       child: Container(
         padding: EdgeInsets.symmetric(
@@ -38,7 +48,7 @@ class DinerTile extends StatelessWidget {
             SizedBox(
               width: 100.w,
               height: 120.h,
-              child: const Placeholder(),
+              child: Image.network(model.imageUrl),
             ),
             8.horizontalSpace,
             Expanded(
@@ -46,11 +56,11 @@ class DinerTile extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Restaurant Name',
+                    model.name,
                     style: context.textTheme.headlineSmall,
                   ),
                   Text(
-                    'Lorem Ipsum',
+                    model.phone,
                     style: context.textTheme.bodySmall,
                   ),
                 ],

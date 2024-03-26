@@ -23,4 +23,5 @@ class Strings {
   static String drumming = 'drumming'.anim;
   static String searching = 'search'.anim;
   static String splash = 'splash'.anim;
+  static String empty = 'empty'.anim;
 }
