@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mystery_dinning_adventure/core/__extension_export.dart';
@@ -80,47 +81,50 @@ class DinerDetails extends StatelessWidget {
                   Expanded(
                     child: TabBarView(
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Wrap(
-                              children: [
-                                for (var i in restaurant?.categories ?? []) ...{
-                                  CategoryChip(
-                                    isSelected: false,
-                                    title: i.title,
-                                  ),
-                                },
-                              ],
-                            ),
-                            16.verticalSpace,
-                            TitleContent(
-                              title: 'Name',
-                              content: restaurant?.name ?? '',
-                            ),
-                            16.verticalSpace,
-                            TitleContent(
-                              title: 'Phone',
-                              content: restaurant?.phone ?? '',
-                            ),
-                            16.verticalSpace,
-                            TitleContent(
-                              title: 'Addres',
-                              content: restaurant?.location.address1 ?? '',
-                            ),
-                            16.verticalSpace,
-                            TitleContent(
-                              title: 'Distance Away',
-                              content: (restaurant?.distance ?? 0.0)
-                                  .toStringAsFixed(2),
-                            ),
-                            16.verticalSpace,
-                            TitleContent(
-                              title: 'Rating',
-                              content: (restaurant?.rating ?? 0.0)
-                                  .toStringAsFixed(1),
-                            ),
-                          ],
+                        SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Wrap(
+                                children: [
+                                  for (var i
+                                      in restaurant?.categories ?? []) ...{
+                                    CategoryChip(
+                                      isSelected: false,
+                                      title: i.title,
+                                    ),
+                                  },
+                                ],
+                              ),
+                              16.verticalSpace,
+                              TitleContent(
+                                title: 'Name',
+                                content: restaurant?.name ?? '',
+                              ),
+                              16.verticalSpace,
+                              TitleContent(
+                                title: 'Phone',
+                                content: restaurant?.phone ?? '',
+                              ),
+                              16.verticalSpace,
+                              TitleContent(
+                                title: 'Addres',
+                                content: restaurant?.location.address1 ?? '',
+                              ),
+                              16.verticalSpace,
+                              TitleContent(
+                                title: 'Distance Away',
+                                content: (restaurant?.distance ?? 0.0)
+                                    .toStringAsFixed(2),
+                              ),
+                              16.verticalSpace,
+                              TitleContent(
+                                title: 'Rating',
+                                content: (restaurant?.rating ?? 0.0)
+                                    .toStringAsFixed(1),
+                              ),
+                            ],
+                          ),
                         ),
                         if (!fromResult) ...{
                           FutureBuilder(

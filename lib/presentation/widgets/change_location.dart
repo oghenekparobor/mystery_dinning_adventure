@@ -31,7 +31,7 @@ class ChangeLocation extends StatelessWidget {
               8.horizontalSpace,
               Expanded(
                 child: Text(
-                  value.myLocation == null
+                  value.setCoordinates == null
                       ? 'Click to Pick Location'
                       : 'Change Location (${value.setCoordinates?.latitude}, ${value.setCoordinates?.longitude})',
                   style: context.textTheme.bodyMedium,

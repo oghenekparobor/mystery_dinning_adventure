@@ -41,6 +41,8 @@ class MyNotifier with ChangeNotifier {
   void setCoordinate(LatLong latLong) {
     setCoordinates = latLong;
 
+    AppLogger.log(setCoordinates?.latitude);
+
     notifyListeners();
   }
 

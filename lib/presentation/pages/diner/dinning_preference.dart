@@ -164,7 +164,7 @@ class _SetDinningPreferenceState extends State<SetDinningPreference> {
   }
 
   void search() {
-    if (context.myn.myLocation == null) {
+    if (context.myn.setCoordinates == null) {
       context.notify.addNotification(
         const NotificationTile(
           message: 'Select desired location',

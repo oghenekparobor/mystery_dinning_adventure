@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:mystery_dinning_adventure/core/__extension_export.dart';
 import 'package:mystery_dinning_adventure/core/extension/widget.dart';
+import 'package:mystery_dinning_adventure/core/logger/app_logger.dart';
 import 'package:mystery_dinning_adventure/core/resources/notification.dart';
 import 'package:mystery_dinning_adventure/presentation/notifier/notifier.dart';
 import 'package:provider/provider.dart';
@@ -53,6 +54,9 @@ class _MyLocationPageState extends State<MyLocationPage> {
                     trackMyPosition: true,
                     onError: (e) => print(e),
                     onPicked: (pickedData) {
+                      AppLogger.log(pickedData.latLong.latitude);
+                      AppLogger.log(pickedData.latLong.longitude);
+
                       context.myn.setCoordinate(pickedData.latLong);
                       context.pop();
                     },
