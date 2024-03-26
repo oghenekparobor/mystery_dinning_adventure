@@ -33,7 +33,7 @@ Follow these steps to set up the project:
 6. Check the `.env` file to ensure that everything is in order before proceeding.
 7. Generate all required classes:
     ```bash
-    flutter pub run build_runner build --delete-conflicting-outputs
+    dart run build_runner build --delete-conflicting-outputs
     ```
 8. Connect a physical device or start an emulator, and run the project:
     ```bash
