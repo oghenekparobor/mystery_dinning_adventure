@@ -16,9 +16,7 @@ class GetBusinessesUsecase extends UseCase<AppState, BusinessParam> {
   Future<AppState> call({required BusinessParam params}) async {
     String query = '';
 
-    query += '&latitude=40.7128&longitude=74.0060';
-    // todo: used selected location from map
-    // query += '&latitude=${params.latitude}&longitude=${params.longitude}';
+    query += '&latitude=${params.latitude}&longitude=${params.longitude}';
 
     if (params.categories != null || params.categories!.isNotEmpty) {
       for (var c in params.categories!) {
@@ -41,15 +39,15 @@ class GetBusinessesUsecase extends UseCase<AppState, BusinessParam> {
     //     query += '&attributes=$a';
     //   }
     // }
-    
-    if (params.date != null) {
-      if (params.person != null && params.person! > 0) {
-        query += '&reservation_covers=${params.person}';
-      }
 
-      query +=
-          '&reservation_date=${params.date!.year}-${params.date!.month}-${params.date!.day}';
-    }
+    // if (params.date != null) {
+    //   if (params.person != null && params.person! > 0) {
+    //     query += '&reservation_covers=${params.person}';
+    //   }
+
+    //   query +=
+    //       '&reservation_date=${params.date!.year}-${params.date!.month}-${params.date!.day}';
+    // }
 
     return await repo.getBusiness(query);
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
+import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:mystery_dinning_adventure/core/__extension_export.dart';
 import 'package:mystery_dinning_adventure/core/__network_export.dart';
 import 'package:mystery_dinning_adventure/core/__resources_export.dart';
@@ -34,6 +35,14 @@ class MyNotifier with ChangeNotifier {
   Future<bool> getPermission() async => await locationUsecase.getPermission();
 
   LocationData? myLocation;
+
+  LatLong? setCoordinates;
+
+  void setCoordinate(LatLong latLong) {
+    setCoordinates = latLong;
+
+    notifyListeners();
+  }
 
   Future<void> getLocation() async {
     myLocation = await locationUsecase.getLocation();
@@ -132,8 +141,8 @@ class MyNotifier with ChangeNotifier {
         attributes: selectedAttributes,
         categories: selectedCategories,
         date: reservationDate,
-        latitude: myLocation?.latitude ?? 0.0,
-        longitude: myLocation?.longitude ?? 0.0,
+        latitude: setCoordinates?.latitude ?? 0.0,
+        longitude: setCoordinates?.longitude ?? 0.0,
         person: numberOfPersons,
         priceInteger: [
           categorizeAmount(startCost ?? 0.0),
@@ -152,12 +161,18 @@ class MyNotifier with ChangeNotifier {
     return res;
   }
 
-  Future<List<RestaurantModel>> fetchRestaurants() async {
-    return adventureLogUsecase.fetchRestaurants();
+  List<RestaurantModel> restaurants = [];
+
+  Future<void> fetchRestaurants() async {
+    restaurants = await adventureLogUsecase.fetchRestaurants();
+
+    notifyListeners();
   }
 
   Future<void> addToLog(RestaurantModel model) async {
-    return await adventureLogUsecase.addRestaurantToLog(model);
+    await adventureLogUsecase.addRestaurantToLog(model);
+
+    await fetchRestaurants();
   }
 
   List? reviews;

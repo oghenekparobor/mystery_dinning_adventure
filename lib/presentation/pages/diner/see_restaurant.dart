@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mystery_dinning_adventure/core/__extension_export.dart';
+import 'package:mystery_dinning_adventure/core/__resources_export.dart';
 import 'package:mystery_dinning_adventure/core/app_core.dart';
 import 'package:mystery_dinning_adventure/core/extension/widget.dart';
 import 'package:mystery_dinning_adventure/core/resources/primary_button.dart';
@@ -175,6 +176,9 @@ class DinerDetails extends StatelessWidget {
                   context.myn.addToLog(restaurant!);
 
                   context.go(Strings.homePage);
+                  context.notify.addNotification(
+                    const NotificationTile(message: 'Added to Adventure log'),
+                  );
                 }
               },
               color: Colors.amber.shade100,

@@ -57,6 +57,7 @@ dependencies:
   dart_casing: ^3.0.1
   animated_text_kit: ^4.2.2
   fade_shimmer: ^2.2.0
+  location_picker_flutter_map: ^3.0.1
 
 dev_dependencies:
   flutter_test:

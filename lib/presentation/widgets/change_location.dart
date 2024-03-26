@@ -33,7 +33,7 @@ class ChangeLocation extends StatelessWidget {
                 child: Text(
                   value.myLocation == null
                       ? 'Click to Pick Location'
-                      : 'Change Location (${value.myLocation?.latitude}, ${value.myLocation?.longitude})',
+                      : 'Change Location (${value.setCoordinates?.latitude}, ${value.setCoordinates?.longitude})',
                   style: context.textTheme.bodyMedium,
                 ),
               ),
