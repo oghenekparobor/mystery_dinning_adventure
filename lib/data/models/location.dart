@@ -1,44 +1,42 @@
 import 'package:mystery_dinning_adventure/domain/entities/location.dart';
 
-class LocationModel extends LocationEntity {
+class LocationModel extends Location {
   const LocationModel({
-    required super.id,
-    required super.latitude,
-    required super.longitude,
-    required super.description,
-    required super.isCurrent,
+    required super.address1,
+    super.address2,
+    super.address3,
+    required super.city,
+    required super.zipCode,
+    required super.country,
+    required super.state,
+    required super.displayAddress,
   });
 
-  factory LocationModel.fromJson(Map<String, dynamic> json) => LocationModel(
-        id: json['id'] as String,
-        latitude: json['latitude'] as double,
-        longitude: json['longitude'] as double,
-        description: json['description'] as String,
-        isCurrent: json['isCurrent'] == 1,
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'latitude': latitude,
-        'longitude': longitude,
-        'description': description,
-        'isCurrent': isCurrent ? 1 : 0,
-      };
-
-  String toQuery() {
-    return '''
-      INSERT INTO Locations (id, latitude, longitude, description, isCurrent)
-      VALUES (?, ?, ?, ?, ?)
-    ''';
+  factory LocationModel.fromJson(Map<String, dynamic> json) {
+    return LocationModel(
+      address1: json['address1'] ?? '',
+      address2: json['address2'],
+      address3: json['address3'],
+      city: json['city'] ?? '',
+      zipCode: json['zip_code'] ?? '',
+      country: json['country'] ?? '',
+      state: json['state'] ?? '',
+      displayAddress: List<String>.from(json['display_address'] ?? []),
+    );
   }
 
-  List<dynamic> get toQueryArguments => [
-        id,
-        latitude,
-        longitude,
-        description,
-        isCurrent,
-      ];
+  Map<String, dynamic> toJson() {
+    return {
+      'address1': address1,
+      'address2': address2,
+      'address3': address3,
+      'city': city,
+      'zip_code': zipCode,
+      'country': country,
+      'state': state,
+      'display_address': displayAddress,
+    };
+  }
 
   static String get createTableQuery => '''
     CREATE TABLE IF NOT EXISTS Locations (
