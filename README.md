@@ -21,7 +21,7 @@ samples, guidance on mobile development, and a full API reference.
 - Change to the flutter project ```cd mystery_dinning_adventure ```
 - Install the flutter plugins ```flutter pub get```
 - Run this command to create the .env file ``` echo "BaseUrl=https://api.yelp.com" >> .env && echo "Key={Your YELP Key goes here}" >> .env ```
-- Get all generated classes ```flutter pub run build_runner build --delete-conflicting-outputs```
+- Get all generated classes ```dart run build_runner build --delete-conflicting-outputs```
 - We either you physical device connected or an emulator run the project ```flutter run```
 
 ```
