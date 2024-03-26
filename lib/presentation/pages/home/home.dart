@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -14,16 +15,18 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.push(Strings.dinningPreference);
-        },
-        backgroundColor: Colors.amber,
-        isExtended: true,
-        child: Image.asset(
-          Strings.findRestaurant,
-          width: 30.w,
-          height: 30.h,
+      floatingActionButton: Pulse(
+        child: FloatingActionButton(
+          onPressed: () {
+            context.push(Strings.dinningPreference);
+          },
+          backgroundColor: Colors.amber,
+          isExtended: true,
+          child: Image.asset(
+            Strings.findRestaurant,
+            width: 30.w,
+            height: 30.h,
+          ),
         ),
       ),
       appBar: AppBar(

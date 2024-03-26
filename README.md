@@ -4,6 +4,8 @@
 
 Welcome to Mystery Dining Adventure! This Flutter project aims to provide users with an exciting and suspenseful dining experience by leveraging the Yelp API to select and recommend dining spots based on user preferences.
 
+[![Example Video](https://img.youtube.com/vi/uMjMweZmcvs/0.jpg)](https://www.youtube.com/watch?v=uMjMweZmcvs)
+
 ## Getting Started
 
 ### Project Setup
