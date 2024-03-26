@@ -37,14 +37,4 @@ class LocationModel extends Location {
       'display_address': displayAddress,
     };
   }
-
-  static String get createTableQuery => '''
-    CREATE TABLE IF NOT EXISTS Locations (
-      id TEXT PRIMARY KEY,
-      latitude REAL NOT NULL,
-      longitude REAL NOT NULL,
-      description TEXT,
-      isCurrent INTEGER NOT NULL
-    )
-  ''';
 }

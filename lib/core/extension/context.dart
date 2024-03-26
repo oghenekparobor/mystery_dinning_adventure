@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:mystery_dinning_adventure/core/resources/notification_wrapper.dart';
+import 'package:mystery_dinning_adventure/presentation/notifier/notifier.dart';
+import 'package:provider/provider.dart';
 
 extension CxtExtension on BuildContext {
   // theme related
@@ -23,4 +25,6 @@ extension CxtExtension on BuildContext {
   FocusScopeNode get focusScope => FocusScope.of(this);
 
   NotificationWrapperStackState get notify => NotificationWrapperStack.of(this);
+
+  MyNotifier get myn => read<MyNotifier>();
 }

@@ -9,6 +9,7 @@ import 'package:mystery_dinning_adventure/presentation/pages/diner/dinning_prefe
 import 'package:mystery_dinning_adventure/presentation/pages/diner/reveal.dart';
 import 'package:mystery_dinning_adventure/presentation/pages/diner/roullete.dart';
 import 'package:mystery_dinning_adventure/presentation/pages/diner/select_reveal.dart';
+import 'package:mystery_dinning_adventure/presentation/pages/splash.dart';
 
 GlobalKey<NavigatorState> navkey = GlobalKey();
 
@@ -16,6 +17,10 @@ final routerConfig = GoRouter(
   routes: [
     GoRoute(
       path: '/',
+      builder: (context, state) => const SplashScreen(),
+    ),
+    GoRoute(
+      path: Strings.homePage,
       builder: (context, state) => const HomePage(),
     ),
     GoRoute(

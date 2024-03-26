@@ -4,11 +4,9 @@ import 'package:sqflite/sqflite.dart';
 
 @lazySingleton
 class DatabaseWrapper {
-  DatabaseWrapper({
-    required this.database,
-  });
+  DatabaseWrapper();
 
-  final Database database;
+  Database? database;
 
   Future<void> initializeDatabase(
     String dbName,
@@ -18,27 +16,29 @@ class DatabaseWrapper {
 
     // Check if database already exists
     final dbExists = await databaseExists(path);
+    AppLogger.log(dbExists);
 
     if (!dbExists) {
       try {
         // Create a new database
-        await openDatabase(path, version: 1, onCreate: (_, int version) async {
+        database = await openDatabase(path, version: 1,
+            onCreate: (_, int version) async {
           for (final query in createTableQueries) {
-            await database.execute(query);
+            await database?.execute(query);
           }
         });
 
         AppLogger.log('Database created at $path');
-      } on DatabaseException catch (e) {
-        AppLogger.log(e);
+      } on DatabaseException catch (e, s) {
+        AppLogger.log(e, s);
       }
     } else {
       // Open existing database
       try {
-        await openDatabase(path);
+        database = await openDatabase(path);
         AppLogger.log('Database opened at $path');
-      } on DatabaseException catch (e) {
-        AppLogger.log(e);
+      } on DatabaseException catch (e, s) {
+        AppLogger.log(e, s);
       }
     }
   }

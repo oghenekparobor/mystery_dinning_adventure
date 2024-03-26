@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mystery_dinning_adventure/core/__extension_export.dart';
 import 'package:mystery_dinning_adventure/core/app_core.dart';
+import 'package:mystery_dinning_adventure/presentation/notifier/notifier.dart';
+import 'package:provider/provider.dart';
 
 class ChangeLocation extends StatelessWidget {
   const ChangeLocation({
@@ -22,17 +24,22 @@ class ChangeLocation extends StatelessWidget {
           borderRadius: BorderRadius.circular(30.r),
           border: Border.all(),
         ),
-        child: Row(
-          children: [
-            const Icon(Icons.my_location),
-            8.horizontalSpace,
-            Expanded(
-              child: Text(
-                'Current Location (3.126, 4.560)',
-                style: context.textTheme.bodyMedium,
+        child: Consumer<MyNotifier>(
+          builder: (context, value, child) => Row(
+            children: [
+              child!,
+              8.horizontalSpace,
+              Expanded(
+                child: Text(
+                  value.myLocation == null
+                      ? 'Click to Pick Location'
+                      : 'Change Location (${value.myLocation?.latitude}, ${value.myLocation?.longitude})',
+                  style: context.textTheme.bodyMedium,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
+          child: const Icon(Icons.my_location),
         ),
       ),
     );

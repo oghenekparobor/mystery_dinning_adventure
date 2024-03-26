@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:mystery_dinning_adventure/core/database/database.dart';
-import 'package:mystery_dinning_adventure/data/models/location.dart';
+import 'package:mystery_dinning_adventure/data/models/restaurant.dart';
 
 abstract class LocalDS {
   Future<LocationData> getLocation();
@@ -42,7 +42,8 @@ class LocalDSImpl extends LocalDS {
   Future<void> startDB() async {
     // todo: Add the List of create table queries
     await database.initializeDatabase('mystery_dinning_adventures', [
-      LocationModel.createTableQuery,
+      RestaurantModel.createTableQuery,
+      RestaurantModel.createTable2Query,
     ]);
   }
 }

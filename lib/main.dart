@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:mystery_dinning_adventure/core/extension/context.dart';
 import 'package:mystery_dinning_adventure/core/service_locator/injection_container.dart';
 import 'package:mystery_dinning_adventure/core/theme/theme.dart';
+import 'package:mystery_dinning_adventure/domain/repositories/repo.dart';
 import 'package:mystery_dinning_adventure/presentation/notifier/notifier.dart';
 import 'package:provider/provider.dart';
 
@@ -12,7 +13,11 @@ import 'core/routes/route.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await configureDependencies();
+
+  // Initialize the database at app start up
+  await sl<MyRepo>().init();
 
   runApp(const MyApp());
 }
@@ -34,7 +39,7 @@ class MyApp extends StatelessWidget {
         child: MaterialApp.router(
           title: Strings.title,
           routerConfig: routerConfig,
-          debugShowMaterialGrid: false,
+          debugShowCheckedModeBanner: false,
           theme: theme(context),
           builder: (context, child) {
             // set up font scaling
@@ -45,7 +50,7 @@ class MyApp extends StatelessWidget {
             final MediaQueryData mediaQuery = context.mediaQuery.copyWith(
               textScaler: scale,
             );
-        
+
             return MediaQuery(
               data: mediaQuery,
               child: NotificationWrapperStack(child: child!),

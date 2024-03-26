@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:mystery_dinning_adventure/core/__extension_export.dart';
 import 'package:mystery_dinning_adventure/core/app_strings.dart';
 import 'package:mystery_dinning_adventure/core/extension/widget.dart';
+import 'package:mystery_dinning_adventure/core/resources/notification.dart';
 import 'package:mystery_dinning_adventure/core/resources/primary_button.dart';
 
 class MyLocationPage extends StatefulWidget {
@@ -17,6 +19,8 @@ class _MyLocationPageState extends State<MyLocationPage> {
   void initState() {
     super.initState();
   }
+
+  bool gettingLocation = false;
 
   @override
   Widget build(BuildContext context) {
@@ -78,10 +82,12 @@ class _MyLocationPageState extends State<MyLocationPage> {
                   textAlign: TextAlign.center,
                 ),
                 const Spacer(),
-                PrimaryButton(
-                  text: 'Use Current Location',
-                  onTap: () {},
-                ),
+                gettingLocation
+                    ? const CircularProgressIndicator()
+                    : PrimaryButton(
+                        text: 'Use Current Location',
+                        onTap: getLocation,
+                      ),
                 30.verticalSpace,
               ],
             ).padHorizontal,
@@ -89,5 +95,30 @@ class _MyLocationPageState extends State<MyLocationPage> {
         ],
       ),
     );
+  }
+
+  void getLocation() async {
+    setState(() {
+      gettingLocation = !gettingLocation;
+    });
+
+    if (await context.myn.hasPermission()) {
+      if (mounted) {
+        context.myn.getLocation().then((value) {
+          context.pop();
+        });
+      }
+    } else {
+      if (mounted) {
+        context.notify.addNotification(
+          NotificationTile(
+            message: 'Location permission denied',
+            type: NotificationType.error,
+            onTap: () {},
+            action: 'Open settings',
+          ),
+        );
+      }
+    }
   }
 }

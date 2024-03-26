@@ -1,8 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:location/location.dart';
+import 'package:mystery_dinning_adventure/domain/usecases/location.dart';
 
-@injectable
-class MyNotifier with ChangeNotifier {}
+@lazySingleton
+class MyNotifier with ChangeNotifier {
+  MyNotifier({
+    required this.locationUsecase,
+  });
+
+  final LocationUsecase locationUsecase;
+
+  Future<bool> hasPermission() async => await locationUsecase.hasPermission();
+
+  Future<bool> getPermission() async => await locationUsecase.getPermission();
+
+  LocationData? myLocation;
+
+  Future<void> getLocation() async {
+    myLocation = await locationUsecase.getLocation();
+
+    notifyListeners();
+  }
+}
 
 final images = <ImageProvider>[
   const NetworkImage(

@@ -2,6 +2,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:location/location.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @module
@@ -13,6 +14,9 @@ abstract class RegisterModule {
           receiveTimeout: const Duration(milliseconds: 15000),
         ),
       );
+
+  @lazySingleton
+  Location get location => Location();
 
   @preResolve
   Future<SharedPreferences> get preferences => SharedPreferences.getInstance();

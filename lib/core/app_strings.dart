@@ -9,6 +9,7 @@ class Strings {
   static const String networkStatusKey = "Mystery_Dinning_Network_Status";
 
   // Pages
+  static const String homePage = "/home";
   static const String locationPage = "/location";
   static const String dinningPreference = "/dinning-preference";
   static const String selectReveal = "/select-reveal";
@@ -21,4 +22,5 @@ class Strings {
   static String findRestaurant = 'find_restaurant'.png;
   static String drumming = 'drumming'.anim;
   static String searching = 'search'.anim;
+  static String splash = 'splash'.anim;
 }

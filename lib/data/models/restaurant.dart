@@ -110,4 +110,21 @@ class RestaurantModel extends Restaurant {
       attributes: attributes ?? this.attributes,
     );
   }
+
+  static String get createTableQuery => '''
+    CREATE TABLE IF NOT EXISTS Restaurant (
+      id TEXT PRIMARY KEY,
+      business_id TEXT NOT NULL,
+      business_details TEXT NOT NULL
+    )
+  ''';
+
+  static String get createTable2Query => '''
+    CREATE TABLE IF NOT EXISTS Review (
+      id TEXT PRIMARY KEY,
+      business_id TEXT NOT NULL,
+      review TEXT,
+      rating REAL
+    )
+  ''';
 }
