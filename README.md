@@ -1,29 +1,79 @@
-# mystery_dinning_adventure
+# Mystery Dining Adventure
 
-A new Flutter project.
+## Overview
+
+Welcome to Mystery Dining Adventure! This Flutter project aims to provide users with an exciting and suspenseful dining experience by leveraging the Yelp API to select and recommend dining spots based on user preferences.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
-
 ### Project Setup
-- Click on the code button to see the repo link
-- Open your terminal and run ``` git clone https://github.com/oghenekparobor/mystery_dinning_adventure.git ```
-- Change to the flutter project ```cd mystery_dinning_adventure ```
-- Install the flutter plugins ```flutter pub get```
-- Run this command to create the .env file ``` echo "BaseUrl=https://api.yelp.com" >> .env && echo "Key={Your YELP Key goes here}" >> .env ```
-- Please check the .env file to see that everything is in order before running the below command
-- Get all generated classes ```dart run build_runner build --delete-conflicting-outputs```
-- We either you physical device connected or an emulator run the project ```flutter run```
+
+Follow these steps to set up the project:
+
+1. Click on the code button to see the repository link.
+2. Open your terminal and run the following command to clone the repository:
+    ```bash
+    git clone https://github.com/oghenekparobor/mystery_dinning_adventure.git
+    ```
+3. Change to the flutter project directory:
+    ```bash
+    cd mystery_dinning_adventure
+    ```
+4. Install the Flutter plugins:
+    ```bash
+    flutter pub get
+    ```
+5. Run this command to create the `.env` file with your Yelp API credentials:
+    ```bash
+    echo "BaseUrl=https://api.yelp.com" >> .env && echo "Key={Your Yelp API Key goes here}" >> .env
+    ```
+    Replace `{Your Yelp API Key goes here}` with your actual Yelp API key.
+6. Check the `.env` file to ensure that everything is in order before proceeding.
+7. Generate all required classes:
+    ```bash
+    flutter pub run build_runner build --delete-conflicting-outputs
+    ```
+8. Connect a physical device or start an emulator, and run the project:
+    ```bash
+    flutter run
+    ```
+
+### Feature Overview
+
+#### Mystery Search
+
+Users input their dining preferences, and the app selects the best match based on the Yelp Fusion-powered system. The preferences are customizable, allowing users to specify categories and other preferences inside the power preference.
+
+#### Culinary Roulette
+
+This interactive feature suggests a restaurant to the user at random using an actual roulette filled with the best matches based on their preferences and location. Users have the option to spin the wheel again or accept the recommendation.
+
+#### Adventure Log
+
+Powered by SQLite technology, users can keep track of their adventurous dining experiences locally. They can provide reviews and ratings for each session, with logs stored only on their devices.
+
+### Packages
+
+This project was built using Clean Architecture and relies on the following packages:
+
+1. `roulette`: Used to present businesses in an actual roulette that can be spun.
+2. `Animate Do`: Provides animation effects.
+3. `location`: Retrieves the user's device location.
+4. `Location Picker Flutter Map`: A map for searching and selecting locations.
+
+### Project Instructions
+
+#### Core Features
+
+1. **Mystery Search**: Users input their preferences, and the app selects a dining spot for them, revealing it in an engaging and suspenseful manner.
+2. **Culinary Roulette**: An interactive feature allowing users to spin a wheel for random restaurant suggestions, based on their location and preferences.
+3. **Adventure Log**: Users can track their mystery dining experiences, including writing reviews and rating the surprise factor.
+
+#### Using the Yelp API
+
+The Yelp Fusion api was mainly used to get categories Yelp Fusion works with and provide the business based on some query command.
+
+
 
 ```
 mystery_dinning_adventure
