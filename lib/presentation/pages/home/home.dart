@@ -5,7 +5,6 @@ import 'package:lottie/lottie.dart';
 import 'package:mystery_dinning_adventure/core/__extension_export.dart';
 import 'package:mystery_dinning_adventure/core/app_strings.dart';
 import 'package:mystery_dinning_adventure/presentation/notifier/notifier.dart';
-import 'package:mystery_dinning_adventure/presentation/widgets/change_location.dart';
 import 'package:mystery_dinning_adventure/presentation/widgets/diner_tile.dart';
 import 'package:provider/provider.dart';
 

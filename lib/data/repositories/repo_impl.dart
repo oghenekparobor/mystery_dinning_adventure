@@ -4,7 +4,6 @@ import 'package:injectable/injectable.dart';
 import 'package:location/location.dart';
 import 'package:mystery_dinning_adventure/core/__network_export.dart';
 import 'package:mystery_dinning_adventure/core/extension/state.dart';
-import 'package:mystery_dinning_adventure/core/logger/app_logger.dart';
 import 'package:mystery_dinning_adventure/data/datasources/local/local.dart';
 import 'package:mystery_dinning_adventure/data/datasources/remote/remote.dart';
 import 'package:mystery_dinning_adventure/data/models/restaurant.dart';
