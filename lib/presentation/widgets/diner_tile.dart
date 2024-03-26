@@ -27,10 +27,10 @@ class DinerTile extends StatelessWidget {
         );
       },
       child: Container(
-        padding: EdgeInsets.symmetric(
-          horizontal: 16.w,
-          vertical: 16.h,
-        ),
+        // padding: EdgeInsets.symmetric(
+        //   horizontal: 16.w,
+        //   vertical: 16.h,
+        // ),
         margin: EdgeInsets.only(bottom: 8.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15.r),
@@ -46,11 +46,23 @@ class DinerTile extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(
-              width: 100.w,
-              height: 120.h,
-              child: Image.network(model.imageUrl),
+              width: 120.w,
+              height: 150.h,
+              child: Hero(
+                tag: model.id,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15.r),
+                    bottomLeft: Radius.circular(15.r),
+                  ),
+                  child: Image.network(
+                    model.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
             ),
-            8.horizontalSpace,
+            16.horizontalSpace,
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,

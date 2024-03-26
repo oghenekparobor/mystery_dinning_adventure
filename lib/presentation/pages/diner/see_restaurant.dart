@@ -41,9 +41,12 @@ class DinerDetails extends StatelessWidget {
             SizedBox(
               height: 250.h,
               width: double.infinity,
-              child: Image.network(
-                restaurant!.imageUrl,
-                fit: BoxFit.cover,
+              child: Hero(
+                tag: restaurant?.id ?? DateTime.now().toIso8601String(),
+                child: Image.network(
+                  restaurant!.imageUrl,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           },

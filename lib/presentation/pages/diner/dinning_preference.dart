@@ -28,11 +28,6 @@ class SetDinningPreference extends StatefulWidget {
 }
 
 class _SetDinningPreferenceState extends State<SetDinningPreference> {
-  double cs = 5;
-
-  double sc = 1000;
-  double ec = 2500;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,60 +43,50 @@ class _SetDinningPreferenceState extends State<SetDinningPreference> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             30.verticalSpace,
-            const ChangeLocation(),
+            // const ChangeLocation(),
             16.verticalSpace,
             FutureBuilder(
               future: context.myn.getCategories(),
               builder: (context, snapshot) {
                 return Consumer<MyNotifier>(
-                  builder: (context, value, child) => Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.symmetric(
-                      vertical: 16.h,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.r),
-                      // border: Border.all(),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Text(
-                          'Select Categories',
-                          style: context.textTheme.labelMedium,
-                        ),
-                        8.verticalSpace,
-                        Wrap(
-                          children: [
-                            if (value.categories != null) ...{
-                              for (var i in value.categories ?? [])
-                                CategoryChip(
-                                  title: Casing.titleCase(i),
-                                  isSelected: value.isCategorySelected(i),
-                                  onTap: () => value.addRemoveCategory(i),
-                                )
-                            } else ...{
-                              for (var i = 0; i < 15; i++) ...{
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    right: 8.w,
-                                    bottom: 8.h,
-                                  ),
-                                  child: FadeShimmer(
-                                    height: 30.h,
-                                    width: 90.w,
-                                    baseColor: Colors.amber.shade50,
-                                    highlightColor: Colors.black12,
-                                    radius: 30.r,
-                                  ),
+                  builder: (context, value, child) => Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        'Select Categories',
+                        style: context.textTheme.labelMedium,
+                      ),
+                      8.verticalSpace,
+                      Wrap(
+                        children: [
+                          if (value.categories != null) ...{
+                            for (var i in value.categories ?? [])
+                              CategoryChip(
+                                title: Casing.titleCase(i),
+                                isSelected: context.myn.isCategorySelected(i),
+                                onTap: () => context.myn.addRemoveCategory(i),
+                              )
+                          } else ...{
+                            for (var i = 0; i < 15; i++) ...{
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  right: 8.w,
+                                  bottom: 8.h,
                                 ),
-                              }
+                                child: FadeShimmer(
+                                  height: 30.h,
+                                  width: 90.w,
+                                  baseColor: Colors.amber.shade50,
+                                  highlightColor: Colors.black12,
+                                  radius: 30.r,
+                                ),
+                              ),
                             }
-                          ],
-                        )
-                      ],
-                    ),
+                          }
+                        ],
+                      )
+                    ],
                   ),
                 );
               },
