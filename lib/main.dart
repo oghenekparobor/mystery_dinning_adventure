@@ -11,7 +11,7 @@ import 'core/app_core.dart';
 import 'core/resources/notification_wrapper.dart';
 import 'core/routes/route.dart';
 
-void main() async {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await configureDependencies();

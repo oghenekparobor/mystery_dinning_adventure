@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       floatingActionButton: Pulse(
         child: FloatingActionButton(
+          key: const ValueKey('floating_action_button'),
           onPressed: () {
             context.push(Strings.dinningPreference);
           },
@@ -31,6 +32,7 @@ class HomePage extends StatelessWidget {
       ),
       appBar: AppBar(
         title: Text(
+          key: const ValueKey('app_bar_widget'),
           'Mystery Dinning',
           style: context.textTheme.bodyMedium,
         ),
