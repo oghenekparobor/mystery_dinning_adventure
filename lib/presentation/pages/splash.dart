@@ -26,7 +26,10 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: LottieBuilder.asset(Strings.splash),
+        key: const ValueKey('splash_icon'),
+        child: LottieBuilder.asset(
+          Strings.splash,
+        ),
       ),
     );
   }
