@@ -30,6 +30,7 @@ class _SetDinningPreferenceState extends State<SetDinningPreference> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: const ValueKey('set_dinning_preference_scaffold'),
       appBar: AppBar(
         title: Text(
           'Set Dinning Preference',

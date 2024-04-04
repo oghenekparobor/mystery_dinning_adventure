@@ -14,6 +14,7 @@ class ChangeLocation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: const ValueKey('change_location_tap'),
       onTap: () => context.push(Strings.locationPage),
       child: Container(
         padding: EdgeInsets.symmetric(
