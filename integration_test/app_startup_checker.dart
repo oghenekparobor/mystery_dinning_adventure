@@ -79,16 +79,22 @@ void main() {
 
     await tester.tap(floatingButton);
 
-    // final scaffold =
-    //     find.byKey(const ValueKey('set_dinning_preference_scaffold'));
-    // expect(scaffold, findsOneWidget);
+    await tester.pump();
 
-    // await tester.pump();
+    await Future.delayed(const Duration(seconds: 7));
 
-    // final changeLocation = find.byKey(const ValueKey('change_location_tap'));
-    // expect(changeLocation, findsOneWidget);
+    await tester.pump();
 
-    // await tester.tap(changeLocation);
-    // await tester.pump();
+    final scaffold =
+        find.byKey(const ValueKey('set_dinning_preference_scaffold'));
+    expect(scaffold, findsOneWidget);
+
+    await tester.pump();
+
+    final changeLocation = find.byKey(const ValueKey('change_location_tap'));
+    expect(changeLocation, findsOneWidget);
+
+    await tester.tap(changeLocation);
+    await tester.pump();
   });
 }
