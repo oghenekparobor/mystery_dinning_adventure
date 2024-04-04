@@ -35,36 +35,36 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   FutureOr _init() async {
-    if (await context.myn.hasPermission()) {
-      if (mounted) {
-        context.go(Strings.homePage);
-      }
-    } else {
-      if (mounted) {
+    context.go(Strings.homePage);
+    // if (await context.myn.hasPermission()) {
+    //   if (mounted) {
+
+    //   }
+    // } else {
+    // if (mounted) {
+    // context.notify.addNotification(
+    //   const NotificationTile(
+    //     message: 'Location Permission needed',
+    //     type: NotificationType.warning,
+    //   ),
+    // );
+
+    context.myn.getPermission().then((value) {
+      if (value) {
         context.notify.addNotification(
-          const NotificationTile(
-            message: 'Location Permission needed',
-            type: NotificationType.warning,
+          NotificationTile(
+            message: 'Permission denied',
+            type: NotificationType.error,
+            action: 'Open settings',
+            onTap: () {},
           ),
         );
-
-        context.myn.getPermission().then((value) {
-          if (value) {
-            context.notify.addNotification(
-              NotificationTile(
-                message: 'Permission denied',
-                type: NotificationType.error,
-                action: 'Open settings',
-                onTap: () {},
-              ),
-            );
-          } else {
-            _init();
-          }
-
-          context.go(Strings.homePage);
-        });
       }
-    }
+      // else {
+      //   _init();
+      // }
+    });
+    // }
+    // }
   }
 }

@@ -61,17 +61,17 @@ void main() {
 
     AppLogger.log('Running 20 secs delay');
 
-    await Future.delayed(const Duration(seconds: 20));
+    await Future.delayed(const Duration(seconds: 7));
     await tester.pump();
 
-    AppLogger.log('Done running 20 secs delay');
+    AppLogger.log('Done running 7 secs delay');
 
     // check that splash is no longer showing
     expect(splashKey, findsOneWidget);
     AppLogger.log('Splash screen no longer shows');
 
-    await Future.delayed(const Duration(seconds: 20));
-    await tester.pumpAndSettle();
+    await Future.delayed(const Duration(seconds: 7));
+    await tester.pump();
 
     // confirm home screen is opened
     final floatingButton = find.byKey(const ValueKey('floating_action_button'));
