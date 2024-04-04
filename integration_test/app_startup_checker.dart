@@ -22,7 +22,7 @@ void main() {
     AppLogger.log('DOne configuring');
   });
 
-  testWidgets('Check to see if app starts and splash icon is found',
+  testWidgets('Check to see if app starts and splash icon is found and the  floating action button is also found',
       (tester) async {
     // await Adb.shell (
     //     'pm grant <your_package_name> android.permission.ACCESS_FINE_LOCATION');
